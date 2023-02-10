@@ -1,9 +1,9 @@
 package com.orangeproject.orangebank.business.repository
 
-import com.orangeproject.orangebank.repository.models.account.AccountResponse
+import com.orangeproject.orangebank.business.models.OrangeAccount
 
 interface Repository {
 
-    suspend fun getAllAccount(): AccountResponse
+    suspend fun getAllAccount(): List<OrangeAccount>
 
 }
