@@ -8,11 +8,14 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.orangeproject.R
 import com.orangeproject.databinding.FragmentAccountBinding
 import com.orangeproject.orangebank.business.models.OrangeAccount
+import com.orangeproject.orangebank.ui.transaction.ViewPagerAdapter
 import com.orangeproject.utils.Constant
 import com.orangeproject.utils.UiState
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +28,9 @@ class AccountFragment : Fragment() {
     private var _binding: FragmentAccountBinding? = null
     private val binding get() = _binding!!
     private lateinit var listAccount : List<OrangeAccount>
+    private lateinit var pager: ViewPager2
+    private lateinit var tab: TabLayout
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,13 +50,13 @@ class AccountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
 
-        _binding?.swipeRefreshLayout?.setOnRefreshListener(OnRefreshListener {
+        _binding?.swipeRefreshLayout?.setOnRefreshListener {
             _binding?.swipeRefreshLayout?.setRefreshing(true)
 
-            GlobalScope.launch(Dispatchers.IO){
+            GlobalScope.launch(Dispatchers.IO) {
                 accountViewModel.getAllAccount()
             }
-        })
+        }
     }
 
     override fun onDestroyView() {
@@ -80,6 +86,7 @@ class AccountFragment : Fragment() {
             }
         }
 
+        initPagerView()
     }
 
     private fun initSpinner(listAccount: List<OrangeAccount>){
@@ -103,5 +110,21 @@ class AccountFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>) {
             }
         }
+    }
+
+
+    private fun initPagerView(){
+        pager = _binding?.pager!!
+        tab = _binding?.tab!!
+
+        val titleArray = arrayOf(
+            "Credit",
+            "Debit",
+        )
+        val adapter = activity?.supportFragmentManager?.let { ViewPagerAdapter(it, lifecycle) }
+        pager.adapter = adapter
+        TabLayoutMediator(tab, pager){tab, position ->
+            tab.text = titleArray[position]
+        }.attach()
     }
 }
