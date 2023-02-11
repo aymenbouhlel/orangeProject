@@ -5,30 +5,29 @@ import com.orangeproject.orangebank.business.models.OrangeAccount
 import com.orangeproject.orangebank.repository.MyRepository
 import com.orangeproject.utils.ResponseHTTP
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.channelFlow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
 class GetAllAccountUseCase @Inject constructor(private val repository: MyRepository) {
 
-    operator fun invoke(): Flow<ResponseHTTP<List<OrangeAccount>>> = flow {
+    operator fun invoke(): Flow<ResponseHTTP<List<OrangeAccount>>> = channelFlow {
         try {
-            emit(ResponseHTTP.Loading())
+            send(ResponseHTTP.Loading())
             val account = repository.getAllAccount()
             //var responseMapper = mapper.mapAllAccount(account)
-
-            emit(ResponseHTTP.Success(account))
+            send(ResponseHTTP.Success(account))
 
         }catch (e: HttpException) {
             Log.i("aymsoft",  " error 77")
-            emit(ResponseHTTP.Error(e.localizedMessage?:"une erreur inconnu s'est produit"))
+            send(ResponseHTTP.Error(e.localizedMessage?:"une erreur inconnu s'est produit"))
         } catch (e: IOException) {
             Log.i("aymsoft", " error 66")
-            emit(ResponseHTTP.Error(e.localizedMessage?:"erreur de connexion"))
+            send(ResponseHTTP.Error(e.localizedMessage?:"erreur de connexion"))
         }catch (e: Exception) {
             Log.i("aymsoft", " error 55")
-            emit(ResponseHTTP.Error(e.localizedMessage?:"erreur de connexion"))
+            send(ResponseHTTP.Error(e.localizedMessage?:"erreur de connexion"))
         }
     }
 
