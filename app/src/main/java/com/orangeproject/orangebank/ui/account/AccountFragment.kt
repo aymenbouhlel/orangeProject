@@ -24,6 +24,7 @@ class AccountFragment : Fragment() {
     private val accountViewModel : AccountViewModel by activityViewModels()
     private var _binding: FragmentAccountBinding? = null
     private val binding get() = _binding!!
+    private lateinit var listAccount : List<OrangeAccount>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,6 +61,7 @@ class AccountFragment : Fragment() {
     private fun initViewModel() {
         accountViewModel.listAccount.observe(viewLifecycleOwner) { account ->
             initSpinner(account)
+            listAccount = account
             _binding?.swipeRefreshLayout?.isRefreshing = false
         }
 
@@ -90,6 +92,12 @@ class AccountFragment : Fragment() {
         _binding?.spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 _binding?.swipeRefreshLayout?.isRefreshing = false
+
+                GlobalScope.launch(Dispatchers.IO){
+                    listAccount[position].transactionsUrl?.let { accountViewModel.getTransaction(it) }
+
+                    _binding?.swipeRefreshLayout?.isRefreshing = false
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {

@@ -16,17 +16,13 @@ class GetAllAccountUseCase @Inject constructor(private val repository: MyReposit
         try {
             send(ResponseHTTP.Loading())
             val account = repository.getAllAccount()
-            //var responseMapper = mapper.mapAllAccount(account)
             send(ResponseHTTP.Success(account))
 
         }catch (e: HttpException) {
-            Log.i("aymsoft",  " error 77")
             send(ResponseHTTP.Error(e.localizedMessage?:"une erreur inconnu s'est produit"))
         } catch (e: IOException) {
-            Log.i("aymsoft", " error 66")
             send(ResponseHTTP.Error(e.localizedMessage?:"erreur de connexion"))
         }catch (e: Exception) {
-            Log.i("aymsoft", " error 55")
             send(ResponseHTTP.Error(e.localizedMessage?:"erreur de connexion"))
         }
     }
