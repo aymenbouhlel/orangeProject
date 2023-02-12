@@ -1,6 +1,5 @@
 package com.orangeproject.orangebank.ui.account
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,58 +33,58 @@ class AccountViewModel @Inject constructor(val getAllAccountUseCase: GetAllAccou
     val listTransaction: LiveData<List<OrangeTransaction>>
         get() = _transactionLiveData
     init {
-
         viewModelScope.launch {
             getAllAccount()
         }
     }
 
-    suspend fun getAllAccount(){
-        getAllAccountUseCase().onEach { result ->
-            when(result){
+     fun getAllAccount(){
+        viewModelScope.launch {
+            getAllAccountUseCase().onEach { result ->
+                when(result){
 
-                is ResponseHTTP.Loading -> {
+                    is ResponseHTTP.Loading -> {
+                        sendUiState(UiState.SHOW_LOADING)
+                    }
+                    is ResponseHTTP.Error -> {
+                        sendUiState(UiState.ERROR)
+                    }
+                    is ResponseHTTP.Success -> {
 
-                    sendUiState(UiState.SHOW_LOADING)
-                }
-                is ResponseHTTP.Error -> {
-                    sendUiState(UiState.ERROR)
-                }
-                is ResponseHTTP.Success -> {
+                        sendUiState(UiState.HIDE_LOADING)
 
-                    sendUiState(UiState.HIDE_LOADING)
-                  //  _accountLiveData.postValue(result.data)
-                    result.data.let { _accountLiveData.postValue(it) }
+                        _accountLiveData.value = result.data?.let {
+                         it
+                        }?: emptyList()
+                    }
                 }
-            }
-        }.collect()
+            }.collect()
+        }
     }
 
+     fun getTransaction(url: String){
 
-    suspend fun getTransaction(url: String){
-        getTransactionUseCase(url).onEach { result ->
-            when(result){
-
-                is ResponseHTTP.Loading -> {
-                    Log.i("aymsoft", "Loading :")
-                    sendUiState(UiState.SHOW_LOADING)
-                }
-                is ResponseHTTP.Error -> {
-                    Log.i("aymsoft", "Error :")
-                    sendUiState(UiState.ERROR)
-                }
-                is ResponseHTTP.Success -> {
-
-                    result.data.let { _transactionLiveData.postValue(it) }
-
-                }
-            }
-        }.collect()
+         viewModelScope.launch {
+             getTransactionUseCase(url).onEach { result ->
+                 when(result){
+                     is ResponseHTTP.Loading -> {
+                         sendUiState(UiState.SHOW_LOADING)
+                     }
+                     is ResponseHTTP.Error -> {
+                         sendUiState(UiState.ERROR)
+                     }
+                     is ResponseHTTP.Success -> {
+                         _transactionLiveData.value =  result.data?.let {
+                             it
+                         }?: emptyList()
+                     }
+                 }
+             }.collect()
+         }
     }
-
 
     private fun sendUiState(stateUi: UiState) {
-        _updateUiState.postValue(stateUi)
+        _updateUiState.value = stateUi
     }
 
 }

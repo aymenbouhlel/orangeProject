@@ -27,8 +27,8 @@ class ViewPagerAdapter(
 
         val fragmentDebit = TransactionFragment()
         val fragmentCredit = TransactionFragment()
-        var listDebitTransaction: MutableList<OrangeTransaction> = mutableListOf()
-        var listCreditTransaction: MutableList<OrangeTransaction> = mutableListOf()
+        val listDebitTransaction: MutableList<OrangeTransaction> = mutableListOf()
+        val listCreditTransaction: MutableList<OrangeTransaction> = mutableListOf()
 
 
         for (i in listTransaction.indices) {

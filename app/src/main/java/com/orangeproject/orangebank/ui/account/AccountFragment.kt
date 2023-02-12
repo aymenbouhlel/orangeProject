@@ -20,15 +20,15 @@ import com.orangeproject.orangebank.ui.transaction.adapter.ViewPagerAdapter
 import com.orangeproject.utils.Constant
 import com.orangeproject.utils.UiState
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
 
 
 @AndroidEntryPoint
 class AccountFragment : Fragment() {
-    private val accountViewModel : AccountViewModel by activityViewModels()
+    private val accountViewModel: AccountViewModel by activityViewModels()
     private var _binding: FragmentAccountBinding? = null
     private val binding get() = _binding!!
-    private lateinit var listAccount : List<OrangeAccount>
+
+    private lateinit var listAccount: List<OrangeAccount>
     private lateinit var pager: ViewPager2
     private lateinit var tab: TabLayout
 
@@ -52,11 +52,10 @@ class AccountFragment : Fragment() {
         initViewModel()
 
         _binding?.swipeRefreshLayout?.setOnRefreshListener {
-            _binding?.swipeRefreshLayout?.setRefreshing(true)
+            _binding?.swipeRefreshLayout?.isRefreshing = true
 
-            GlobalScope.launch(Dispatchers.IO) {
-                accountViewModel.getAllAccount()
-            }
+            accountViewModel.getAllAccount()
+
         }
     }
 
@@ -76,7 +75,11 @@ class AccountFragment : Fragment() {
             when (state) {
                 UiState.ERROR -> {
                     _binding?.swipeRefreshLayout?.isRefreshing = false
-                    Snackbar.make(binding.contantView, resources.getString(R.string.error_data), Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(
+                        binding.contantView,
+                        resources.getString(R.string.error_data),
+                        Snackbar.LENGTH_LONG
+                    ).show()
 
                     initPagerView(emptyList())
                 }
@@ -89,28 +92,30 @@ class AccountFragment : Fragment() {
             }
         }
 
-
         accountViewModel.listTransaction.observe(viewLifecycleOwner) { transaction ->
             initPagerView(transaction)
         }
     }
 
-    private fun initSpinner(listAccount: List<OrangeAccount>){
+    private fun initSpinner(listAccount: List<OrangeAccount>) {
 
-        var aa = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, listAccount)
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        var spinerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, listAccount)
+        spinerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        _binding?.spinner?.adapter = aa
+        _binding?.spinner?.adapter = spinerAdapter
         _binding?.spinner?.prompt = Constant.selectAccountMessage
         _binding?.spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
                 _binding?.swipeRefreshLayout?.isRefreshing = false
 
-                GlobalScope.launch(Dispatchers.IO){
-                    listAccount[position].transactionsUrl?.let { accountViewModel.getTransaction(it) }
+                listAccount[position].transactionsUrl?.let { accountViewModel.getTransaction(it) }
 
-                    _binding?.swipeRefreshLayout?.isRefreshing = false
-                }
+                _binding?.swipeRefreshLayout?.isRefreshing = false
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -118,17 +123,15 @@ class AccountFragment : Fragment() {
         }
     }
 
-    private fun initPagerView(list: List<OrangeTransaction>){
+    private fun initPagerView(list: List<OrangeTransaction>) {
         pager = _binding?.pager!!
         tab = _binding?.tab!!
 
-        val titleArray = arrayOf(
-            "Credit",
-            "Debit",
-        )
-        val adapter = activity?.supportFragmentManager?.let { ViewPagerAdapter(it, lifecycle, list) }
+        val titleArray = arrayOf( getString(R.string.credit),getString( R.string.debit))
+        val adapter =
+            activity?.supportFragmentManager?.let { ViewPagerAdapter(it, lifecycle, list) }
         pager.adapter = adapter
-        TabLayoutMediator(tab, pager){tab, position ->
+        TabLayoutMediator(tab, pager) { tab, position ->
             tab.text = titleArray[position]
         }.attach()
     }

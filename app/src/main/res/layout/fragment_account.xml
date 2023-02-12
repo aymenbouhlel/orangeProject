@@ -39,7 +39,7 @@
                 android:layout_marginTop="@dimen/dim_40"
                 android:layout_marginRight="@dimen/dim_40"
                 android:spinnerMode="dropdown"
-                style="@style/SpinnerStyle"
+                android:theme="@android:style/Theme.Holo.Light.DarkActionBar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/toolbar" />

@@ -10,12 +10,11 @@ object OrangeAccountMapper {
         accountResponse.Data.Account.map {
             mapAccount(it)
         }
+    private fun mapAccount(account: Account?) = OrangeAccount(
+        AccountId = account?.AccountId,
+        Nickname = account?.Nickname,
+        Status = account?.Status,
+        transactionsUrl = account?.transactionsUrl
+    )
 }
-
-private fun mapAccount(account: Account?) = OrangeAccount(
-    AccountId = account?.AccountId,
-    Nickname = account?.Nickname,
-    Status = account?.Status,
-    transactionsUrl = account?.transactionsUrl
-)
 
