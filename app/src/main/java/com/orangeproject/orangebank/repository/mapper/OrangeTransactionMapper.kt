@@ -12,12 +12,14 @@ object OrangeTransactionMapper {
 
     private fun mapTransaction(transaction: Transaction?) = OrangeTransaction(
 
-        TransactionId = transaction?.TransactionId,
-        Amount = transaction?.Amount?.Amount,
-        CreditDebitIndicator = transaction?.CreditDebitIndicator,
-        Status = transaction?.Status,
-        dateTime = transaction?.ValueDateTime?.let { formatDate(it).first } ,
-        date = transaction?.ValueDateTime?.let { formatDate(it).second },
+        transactionId = transaction?.transactionId,
+        amount = transaction?.amount?.Amount + " €",
+        creditDebitIndicator = transaction?.creditDebitIndicator,
+        status = transaction?.status,
+        dateTime = transaction?.valueDateTime?.let { formatDate(it).first } ,
+        date = transaction?.valueDateTime?.let { formatDate(it).second },
+        transactionInformation = transaction?.transactionInformation,
+        transactionReference = transaction?.transactionReference
 
         )
 

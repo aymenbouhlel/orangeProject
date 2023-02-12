@@ -16,7 +16,7 @@ class GetSortedTransactionUseCase @Inject constructor(private val repository: Or
             val transaction = repository.getAllTransaction(url)
 
             val listSortedTransaction = transaction.sortedWith(compareByDescending { it.date }).filter {
-                it.Status != Constant.statusCanceled
+                it.status != Constant.statusCanceled
             }
 
             send(ResponseHTTP.Success(listSortedTransaction))

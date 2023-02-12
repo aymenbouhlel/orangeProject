@@ -18,7 +18,8 @@
         <TextView
             android:id="@+id/toolbar_title"
             android:text="@string/details"
-            android:textSize="@dimen/ts_16"
+            android:textSize="@dimen/ts_20"
+
             android:layout_gravity="center"
             android:textColor="@color/white"
             android:layout_width="wrap_content"
@@ -34,19 +35,113 @@
     </androidx.appcompat.widget.Toolbar>
 
 
-    <TextView
-        android:text="@{item.amount}"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
 
-        />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/dim_100"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/dim_8">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/content1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/dim_16">
+            <TextView
+                android:id="@+id/data1"
+                android:text="Information: "
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textSize="@dimen/ts_18"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:text="@{item.transactionInformation}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/data1"
+                android:textSize="@dimen/ts_18"
+                android:textStyle="normal"
+                android:layout_marginLeft="@dimen/dim_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/content2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/content1"
+            android:layout_margin="@dimen/dim_16">
+            <TextView
+                android:id="@+id/data2"
+                android:text="Reference: "
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textSize="@dimen/ts_18"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:text="@{item.transactionReference}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/data2"
+                android:textSize="@dimen/ts_18"
+                android:textStyle="normal"
+                android:layout_marginLeft="@dimen/dim_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/content3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/content2"
+            android:layout_margin="@dimen/dim_16">
+            <TextView
+                android:id="@+id/data3"
+                android:text="Montant: "
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textSize="@dimen/ts_18"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:text="@{item.amount}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/data3"
+                android:textSize="@dimen/ts_18"
+                android:textStyle="normal"
+                android:layout_marginLeft="@dimen/dim_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <data>
         <variable
             name="viewModel"

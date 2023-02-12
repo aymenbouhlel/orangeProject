@@ -11,9 +11,9 @@ object OrangeAccountMapper {
             mapAccount(it)
         }
     private fun mapAccount(account: Account?) = OrangeAccount(
-        AccountId = account?.AccountId,
-        Nickname = account?.Nickname,
-        Status = account?.Status,
+        accountId = account?.accountId,
+        nickname = account?.nickname,
+        status = account?.status,
         transactionsUrl = account?.transactionsUrl
     )
 }

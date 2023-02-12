@@ -15,10 +15,10 @@ object TransactionUiMapper {
 
     for (i in listTransaction.indices) {
 
-        if (listTransaction[i].CreditDebitIndicator == Constant.credit) {
+        if (listTransaction[i].creditDebitIndicator == Constant.credit) {
             listCredit.add(listTransaction[i])
         }
-        if (listTransaction[i].CreditDebitIndicator == Constant.debit) {
+        if (listTransaction[i].creditDebitIndicator == Constant.debit) {
             listDebit.add(listTransaction[i])
         }
     }

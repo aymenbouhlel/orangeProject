@@ -30,9 +30,9 @@ class GetAllAccountUseCaseTest {
         val resutSuccess =
             listOf(
                 OrangeAccount(
-                    AccountId = "123",
-                    Nickname = "Aymen",
-                    Status = "Enabled",
+                    accountId = "123",
+                    nickname = "Aymen",
+                    status = "Enabled",
                     transactionsUrl = "UrlListTransaction"
                 )
             )

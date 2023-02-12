@@ -54,7 +54,7 @@ class TransactionListAdapter(
             oldItem: OrangeTransaction,
             newItem: OrangeTransaction
         ): Boolean {
-            return oldItem.TransactionId == newItem.TransactionId
+            return oldItem.transactionId == newItem.transactionId
         }
 
         override fun areContentsTheSame(
