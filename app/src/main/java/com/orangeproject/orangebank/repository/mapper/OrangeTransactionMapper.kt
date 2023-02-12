@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object OrangeTransactionMapper {
-    fun mapTransaction(response: TransactionResponse): List<OrangeTransaction>? =
+    fun mapTransaction(response: TransactionResponse): List<OrangeTransaction> =
         sortTransaction(response.Data.Transaction.map { mapTransaction(it) })
 }
 
@@ -22,7 +22,7 @@ private fun mapTransaction(transaction: Transaction?) = OrangeTransaction(
 
 )
 
-private fun sortTransaction(transaction: List<OrangeTransaction>?): List<OrangeTransaction>?{
+private fun sortTransaction(transaction: List<OrangeTransaction>?): List<OrangeTransaction>{
 
 
     var sortList = transaction?.toMutableList()
@@ -30,9 +30,8 @@ private fun sortTransaction(transaction: List<OrangeTransaction>?): List<OrangeT
     sortList?.sortWith(Comparator { event1, event2 -> event1.date?.let { event2.date!!.compareTo(it) }!! })
 
 
-    return sortList?.toList()
+    return sortList?.toList()!!
 }
-
 
 fun formatDate(_date: String) : Pair<Date, String> {
 

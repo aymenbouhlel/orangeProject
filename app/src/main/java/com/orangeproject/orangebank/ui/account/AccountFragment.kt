@@ -15,6 +15,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.orangeproject.R
 import com.orangeproject.databinding.FragmentAccountBinding
 import com.orangeproject.orangebank.business.models.OrangeAccount
+import com.orangeproject.orangebank.business.models.OrangeTransaction
 import com.orangeproject.orangebank.ui.transaction.adapter.ViewPagerAdapter
 import com.orangeproject.utils.Constant
 import com.orangeproject.utils.UiState
@@ -86,7 +87,10 @@ class AccountFragment : Fragment() {
             }
         }
 
-        initPagerView()
+
+        accountViewModel.listTransaction.observe(viewLifecycleOwner) { transaction ->
+            initPagerView(transaction)
+        }
     }
 
     private fun initSpinner(listAccount: List<OrangeAccount>){
@@ -112,8 +116,7 @@ class AccountFragment : Fragment() {
         }
     }
 
-
-    private fun initPagerView(){
+    private fun initPagerView(list: List<OrangeTransaction>){
         pager = _binding?.pager!!
         tab = _binding?.tab!!
 
@@ -121,7 +124,7 @@ class AccountFragment : Fragment() {
             "Credit",
             "Debit",
         )
-        val adapter = activity?.supportFragmentManager?.let { ViewPagerAdapter(it, lifecycle) }
+        val adapter = activity?.supportFragmentManager?.let { ViewPagerAdapter(it, lifecycle, list) }
         pager.adapter = adapter
         TabLayoutMediator(tab, pager){tab, position ->
             tab.text = titleArray[position]

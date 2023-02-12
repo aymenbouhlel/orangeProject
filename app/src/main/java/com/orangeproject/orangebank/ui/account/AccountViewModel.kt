@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.orangeproject.orangebank.business.models.OrangeAccount
+import com.orangeproject.orangebank.business.models.OrangeTransaction
 import com.orangeproject.orangebank.business.useCases.GetAllAccountUseCase
 import com.orangeproject.orangebank.business.useCases.GetTransactionUseCase
 import com.orangeproject.utils.ResponseHTTP
@@ -28,6 +29,10 @@ class AccountViewModel @Inject constructor(val getAllAccountUseCase: GetAllAccou
     val updateUiState: LiveData<UiState>
         get() = _updateUiState
 
+
+    private val _transactionLiveData: MutableLiveData<List<OrangeTransaction>> = MutableLiveData()
+    val listTransaction: LiveData<List<OrangeTransaction>>
+        get() = _transactionLiveData
     init {
 
         viewModelScope.launch {
@@ -71,11 +76,7 @@ class AccountViewModel @Inject constructor(val getAllAccountUseCase: GetAllAccou
                 }
                 is ResponseHTTP.Success -> {
 
-
-                    for (i in 0 until result.data!!.size){
-
-                        println(result.data[i].date)
-                    }
+                    result.data.let { _transactionLiveData.postValue(it) }
 
                 }
             }
