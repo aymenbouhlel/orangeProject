@@ -77,6 +77,8 @@ class AccountFragment : Fragment() {
                 UiState.ERROR -> {
                     _binding?.swipeRefreshLayout?.isRefreshing = false
                     Snackbar.make(binding.contantView, resources.getString(R.string.error_data), Snackbar.LENGTH_LONG).show()
+
+                    initPagerView(emptyList())
                 }
                 UiState.HIDE_LOADING -> {
                     _binding?.swipeRefreshLayout?.isRefreshing = false
