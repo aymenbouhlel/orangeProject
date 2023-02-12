@@ -4,6 +4,7 @@
     <!-- Strings used for fragments for navigation -->
     <string name="credit">Crédit</string>
     <string name="debit">Débit</string>
+    <string name="details">Détails de la transaction</string>
 
     <string name="error_data">Une erreur s\'est produite, veuillez réessayer plus tard</string>
 </resources>

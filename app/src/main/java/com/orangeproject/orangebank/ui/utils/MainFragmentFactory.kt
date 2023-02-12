@@ -9,8 +9,8 @@ import javax.inject.Inject
 class MainFragmentFactory @Inject constructor(
 ) : FragmentFactory() {
     override fun instantiate(classLoader: ClassLoader, className: String): Fragment = when (className) {
-      //  AccountFragment::class.java.name -> AccountFragment()
-      //  DetailsTransactionFragment::class.java.name -> DetailsTransactionFragment()
+        AccountFragment::class.java.name -> AccountFragment()
+        DetailsTransactionFragment::class.java.name -> DetailsTransactionFragment()
 
         else -> super.instantiate(classLoader, className)
     }
