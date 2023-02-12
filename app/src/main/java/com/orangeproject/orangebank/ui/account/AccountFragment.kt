@@ -99,23 +99,27 @@ class AccountFragment : Fragment() {
 
     private fun initSpinner(listAccount: List<OrangeAccount>) {
 
-        var spinerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, listAccount)
-        spinerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        var spinnerAdapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, listAccount)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        _binding?.spinner?.adapter = spinerAdapter
+        _binding?.spinner?.adapter = spinnerAdapter
         _binding?.spinner?.prompt = Constant.selectAccountMessage
         _binding?.spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View,
+                parent: AdapterView<*>?,
+                view: View?,
                 position: Int,
                 id: Long
             ) {
+
                 _binding?.swipeRefreshLayout?.isRefreshing = false
 
                 listAccount[position].transactionsUrl?.let { accountViewModel.getTransaction(it) }
 
                 _binding?.swipeRefreshLayout?.isRefreshing = false
+
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -123,14 +127,20 @@ class AccountFragment : Fragment() {
         }
     }
 
-    private fun initPagerView(transactionPair : Pair<List<OrangeTransaction>, List<OrangeTransaction>>) {
+    private fun initPagerView(transactionPair: Pair<List<OrangeTransaction>, List<OrangeTransaction>>) {
 
         pager = _binding?.pager!!
         tab = _binding?.tab!!
 
-        val titleArray = arrayOf( getString(R.string.credit),getString( R.string.debit))
+        val titleArray = arrayOf(getString(R.string.credit), getString(R.string.debit))
         val adapter =
-            activity?.supportFragmentManager?.let { ViewPagerAdapter(it, lifecycle, transactionPair) }
+            activity?.supportFragmentManager?.let {
+                ViewPagerAdapter(
+                    it,
+                    lifecycle,
+                    transactionPair
+                )
+            }
         pager.adapter = adapter
         TabLayoutMediator(tab, pager) { tab, position ->
             tab.text = titleArray[position]

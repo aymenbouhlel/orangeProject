@@ -5,10 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.orangeproject.R
 import com.orangeproject.databinding.FragmentTransactionBinding
 import com.orangeproject.orangebank.business.models.OrangeTransaction
+import com.orangeproject.orangebank.ui.detailsTransaction.DetailsTransactionFragment
 import com.orangeproject.orangebank.ui.transaction.adapter.TransactionListAdapter
 import com.orangeproject.utils.Constant
 
@@ -33,14 +37,12 @@ class TransactionFragment : Fragment() {
 
         val transactionListAdapter =
             TransactionListAdapter(requireContext()) {
-              //  findNavController().navigate(
-                 //   R.id.action_CharacterListFragment_to_CharacterDetailFragment,
-                 //   bundleOf(
-                //        CharacterDetailFragment.CHARACTER_ID to it.characterId
-                 //   )
-               // )
-
-                Log.i("aymsoft", "result is :"+it.toString())
+                val bundle = Bundle().apply {
+                    putSerializable(DetailsTransactionFragment.DETAILS_DATA, it as java.io.Serializable)
+                }
+                findNavController().navigate(
+                    R.id.action_AccountFragment_to_TransactionDetailFragment, bundle
+                    )
             }
 
         val args = arguments
