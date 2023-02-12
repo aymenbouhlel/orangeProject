@@ -71,8 +71,11 @@ class AccountViewModel @Inject constructor(val getAllAccountUseCase: GetAllAccou
                 }
                 is ResponseHTTP.Success -> {
 
-                    Log.i("aymsoft", "success :"+result.data?.size)
-                    Log.i("aymsoft", "success :"+result.data?.get(0)?.Amount)
+
+                    for (i in 0 until result.data!!.size){
+
+                        println(result.data[i].date)
+                    }
 
                 }
             }

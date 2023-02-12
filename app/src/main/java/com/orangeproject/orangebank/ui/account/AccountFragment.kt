@@ -15,7 +15,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.orangeproject.R
 import com.orangeproject.databinding.FragmentAccountBinding
 import com.orangeproject.orangebank.business.models.OrangeAccount
-import com.orangeproject.orangebank.ui.transaction.ViewPagerAdapter
+import com.orangeproject.orangebank.ui.transaction.adapter.ViewPagerAdapter
 import com.orangeproject.utils.Constant
 import com.orangeproject.utils.UiState
 import dagger.hilt.android.AndroidEntryPoint

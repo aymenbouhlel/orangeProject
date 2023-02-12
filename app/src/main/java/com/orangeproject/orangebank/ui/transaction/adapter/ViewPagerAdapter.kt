@@ -1,9 +1,10 @@
-package com.orangeproject.orangebank.ui.transaction
+package com.orangeproject.orangebank.ui.transaction.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.orangeproject.orangebank.ui.transaction.TransactionFragment
 
 
 private const val NUM_TABS = 2
@@ -18,9 +19,9 @@ private const val NUM_TABS = 2
 
     override fun createFragment(position: Int): Fragment {
         when (position) {
-            0 -> return CreditFragment()
-            1 -> return DebitFragment()
+            0 -> return TransactionFragment()
+            1 -> return TransactionFragment()
         }
-        return CreditFragment()
+        return TransactionFragment()
     }
 }

@@ -12,7 +12,7 @@ class MyRepository @Inject constructor(private val myApi: MyApi): Repository {
         return   OrangeAccountMapper.mapAllAccount(myApi.getAllAccount())
     }
 
-    override suspend fun getAllTransaction(url: String): List<OrangeTransaction> {
+    override suspend fun getAllTransaction(url: String): List<OrangeTransaction>? {
         return OrangeTransactionMapper.mapTransaction(myApi.getTransaction(url))
     }
 
