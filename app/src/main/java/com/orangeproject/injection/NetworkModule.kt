@@ -1,6 +1,6 @@
 package com.orangeproject.injection
 
-import com.orangeproject.orangebank.repository.MyApi
+import com.orangeproject.orangebank.repository.OrangeApi
 import com.orangeproject.utils.Constant
 import dagger.Module
 import dagger.Provides
@@ -20,8 +20,8 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    internal fun provideMarvelApiInterface(retrofit: Retrofit): MyApi {
-        return retrofit.create(MyApi::class.java)
+    internal fun provideMarvelApiInterface(retrofit: Retrofit): OrangeApi {
+        return retrofit.create(OrangeApi::class.java)
     }
 
     @Singleton

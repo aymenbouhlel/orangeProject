@@ -2,13 +2,10 @@ package com.orangeproject.orangebank.business.useCases
 
 import com.nhaarman.mockitokotlin2.whenever
 import com.orangeproject.orangebank.business.models.OrangeAccount
-import com.orangeproject.orangebank.repository.MyRepository
-import com.orangeproject.utils.ResponseHTTP
+import com.orangeproject.orangebank.repository.OrangeRepository
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert
 import org.junit.Before
 
-import org.junit.Assert.*
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
@@ -16,7 +13,7 @@ import org.mockito.MockitoAnnotations
 class GetAllAccountUseCaseTest {
 
     @Mock
-    lateinit var myRepository: MyRepository
+    lateinit var myRepository: OrangeRepository
 
     private lateinit var gtAllAccountUseCase: GetAllAccountUseCase
 
