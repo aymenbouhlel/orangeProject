@@ -6,4 +6,11 @@ object Constant {
 
     const val selectAccountMessage = "Select your favourite language"
 
+    const val statusCanceled = "Canceled"
+
+    const val credit = "Credit"
+    const val debit = "Debit"
+
+    const val ARGUMENT_KEY = "data_list"
+
 }

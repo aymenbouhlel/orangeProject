@@ -1,37 +1,32 @@
 package com.orangeproject.orangebank.ui.transaction.mapper
 
 import com.orangeproject.orangebank.business.models.OrangeTransaction
-import com.orangeproject.orangebank.ui.transaction.models.TransactionUi
+import com.orangeproject.utils.Constant
 
 object TransactionUiMapper {
 
 
-private fun mapTransaction(transaction: List<OrangeTransaction>) : Pair<List<TransactionUi>, List<TransactionUi>>{
-
-    lateinit var result :  Pair<List<TransactionUi>, List<TransactionUi>>
+ fun mapTransaction(listTransaction: List<OrangeTransaction>) : Pair<List<OrangeTransaction>, List<OrangeTransaction>>{
 
 
+     val listCredit: MutableList<OrangeTransaction> = mutableListOf()
+     val listDebit: MutableList<OrangeTransaction> = mutableListOf()
 
 
-    return result
+    for (i in listTransaction.indices) {
+
+        if (listTransaction[i].CreditDebitIndicator == Constant.credit) {
+            listCredit.add(listTransaction[i])
+        }
+        if (listTransaction[i].CreditDebitIndicator == Constant.debit) {
+            listDebit.add(listTransaction[i])
+        }
+    }
+
+
+    return Pair(listCredit.take(2), listDebit.take(2))
 }
 }
 
 
 
-
-//object OrangeTransactionMapper {
-//    fun mapTransaction(response: TransactionResponse): List<OrangeTransaction> =
-//        response.Data.Transaction.map {
-//            mapTransaction(it)
-//        }
-//}
-//
-//private fun mapTransaction(transaction: Transaction?) = OrangeTransaction(
-//
-//    TransactionId = transaction?.TransactionId,
-//    Amount = transaction?.Amount?.Amount,
-//    CreditDebitIndicator = transaction?.CreditDebitIndicator,
-//    Status = transaction?.Status,
-//    ValueDateTime = transaction?.ValueDateTime
-//)

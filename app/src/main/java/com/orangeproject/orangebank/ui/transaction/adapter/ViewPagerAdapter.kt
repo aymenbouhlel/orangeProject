@@ -7,18 +7,19 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.orangeproject.orangebank.business.models.OrangeTransaction
 import com.orangeproject.orangebank.ui.transaction.TransactionFragment
+import com.orangeproject.utils.Constant
 
 private const val NUM_TABS = 2
 
 class ViewPagerAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
-    _listTransaction: List<OrangeTransaction>
+    _listTransaction: Pair<List<OrangeTransaction>, List<OrangeTransaction>>
 ) :
 
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
-    val listTransaction: List<OrangeTransaction> = _listTransaction
+    val listTransaction: Pair<List<OrangeTransaction>, List<OrangeTransaction>> = _listTransaction
     override fun getItemCount(): Int {
         return NUM_TABS
     }
@@ -27,26 +28,13 @@ class ViewPagerAdapter(
 
         val fragmentDebit = TransactionFragment()
         val fragmentCredit = TransactionFragment()
-        val listDebitTransaction: MutableList<OrangeTransaction> = mutableListOf()
-        val listCreditTransaction: MutableList<OrangeTransaction> = mutableListOf()
 
-
-        for (i in listTransaction.indices) {
-
-            if (listTransaction[i].CreditDebitIndicator == "Credit") {
-                listCreditTransaction.add(listTransaction[i])
-            }
-            if (listTransaction[i].CreditDebitIndicator == "Debit") {
-                listDebitTransaction.add(listTransaction[i])
-            }
+        fragmentCredit.arguments = Bundle().apply {
+            putSerializable(Constant.ARGUMENT_KEY, listTransaction.first as java.io.Serializable)
         }
 
         fragmentDebit.arguments = Bundle().apply {
-            putSerializable("data_list", listDebitTransaction.take(2) as java.io.Serializable)
-        }
-
-        fragmentCredit.arguments = Bundle().apply {
-            putSerializable("data_list", listCreditTransaction.take(2) as java.io.Serializable)
+            putSerializable(Constant.ARGUMENT_KEY, listTransaction.second as java.io.Serializable)
         }
 
         when (position) {

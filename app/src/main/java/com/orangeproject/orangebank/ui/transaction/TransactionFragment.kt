@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.orangeproject.databinding.FragmentTransactionBinding
 import com.orangeproject.orangebank.business.models.OrangeTransaction
 import com.orangeproject.orangebank.ui.transaction.adapter.TransactionListAdapter
+import com.orangeproject.utils.Constant
 
 class TransactionFragment : Fragment() {
 
@@ -42,10 +43,10 @@ class TransactionFragment : Fragment() {
                 Log.i("aymsoft", "result is :"+it.toString())
             }
 
-
         val args = arguments
 
-        listTransaction= args?.getSerializable("data_list") as List<OrangeTransaction>
+        listTransaction= args?.getSerializable(Constant.ARGUMENT_KEY) as List<OrangeTransaction>
+
 
         binding.run {
             binding.recycleView.adapter = transactionListAdapter

@@ -81,7 +81,7 @@ class AccountFragment : Fragment() {
                         Snackbar.LENGTH_LONG
                     ).show()
 
-                    initPagerView(emptyList())
+                    initPagerView(Pair(emptyList(), emptyList()))
                 }
                 UiState.HIDE_LOADING -> {
                     _binding?.swipeRefreshLayout?.isRefreshing = false
@@ -123,13 +123,14 @@ class AccountFragment : Fragment() {
         }
     }
 
-    private fun initPagerView(list: List<OrangeTransaction>) {
+    private fun initPagerView(transactionPair : Pair<List<OrangeTransaction>, List<OrangeTransaction>>) {
+
         pager = _binding?.pager!!
         tab = _binding?.tab!!
 
         val titleArray = arrayOf( getString(R.string.credit),getString( R.string.debit))
         val adapter =
-            activity?.supportFragmentManager?.let { ViewPagerAdapter(it, lifecycle, list) }
+            activity?.supportFragmentManager?.let { ViewPagerAdapter(it, lifecycle, transactionPair) }
         pager.adapter = adapter
         TabLayoutMediator(tab, pager) { tab, position ->
             tab.text = titleArray[position]
